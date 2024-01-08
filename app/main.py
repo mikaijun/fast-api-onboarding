@@ -1,20 +1,16 @@
-import sys
 import firebase_admin
+import requests
 
 from typing import Annotated
 from functools import lru_cache
-from pydantic_settings import BaseSettings, SettingsConfigDict
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from firebase_admin import auth, credentials
-import requests
-
-
-sys.path.append("./dependencies")
 from firebase_admin import credentials
+from dependencies.config import Settings
 
-cred = credentials.Certificate("./serviceAccountKey.json")
+cred = credentials.Certificate("../serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
 
 # サーバーの起動
@@ -23,11 +19,6 @@ app = FastAPI()
 # リクエストボディの定義
 class Message(BaseModel):
   name: str
-
-class Settings(BaseSettings):
-    api_key: str
-
-    model_config = SettingsConfigDict(env_file=".env")
 
 @lru_cache()
 def get_settings():
@@ -81,3 +72,6 @@ def get_token(settings: Annotated[Settings, Depends(get_settings)]):
     data = {"email": "user@example.com" , "password": "secretPassword", "returnSecureToken": True}
     result = requests.post(url=uri, data=data).json()
     return result["idToken"]
+@app.get("/test")
+def test():
+    return 'test'
