@@ -8,7 +8,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from firebase_admin import auth, credentials
 from firebase_admin import credentials
-from dependencies.config import Settings
+from model.Settings import Settings
 
 cred = credentials.Certificate("../serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
