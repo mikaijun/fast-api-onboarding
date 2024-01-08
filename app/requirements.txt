@@ -1,0 +1,6 @@
+firebase-admin
+requests
+fastapi
+pydantic
+uvicorn
+pydantic_settings
