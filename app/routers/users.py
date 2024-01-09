@@ -1,9 +1,8 @@
 from functools import lru_cache
 from typing import Annotated
 from fastapi import APIRouter, Depends
-import requests
+from repository.users import create_user, firebase_login
 from model.Settings import Settings
-from firebase_admin import auth
 
 router = APIRouter()
 
@@ -13,19 +12,12 @@ def get_settings():
 
 @router.get("/user/create", tags=["users"])
 def user_create():
-    user = auth.create_user(
-    email='user@example.com',
-    email_verified=False,
-    phone_number='+15555550100',
-    password='secretPassword',
-    display_name='John Doe',
-    photo_url='http://www.example.com/12345678/photo.png',
-    disabled=False)
-    return {"message": 'Sucessfully created new user: {0}'.format(user.uid)}
+    create_user()
+    # TODO: returnの変更
+    return {"message": 'Sucessfully created new user'}
 
-@router.get("/user/token", tags=["users"])
-def get_token(settings: Annotated[Settings, Depends(get_settings)]):
-    uri = f"https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key={settings.api_key}"
-    data = {"email": "user@example.com" , "password": "secretPassword", "returnSecureToken": True}
-    result = requests.post(url=uri, data=data).json()
-    return result["idToken"]
+# NOTE: エンドポイントに「user」が含まれてないが、ログインは認証関連のためusersに含める
+@router.get("/login", tags=["users"])
+def login(settings: Annotated[Settings, Depends(get_settings)]):
+    # TODO: firebase以外の認証方法に切り替えた場合はメソッドを変更する
+    return firebase_login(settings.api_key)

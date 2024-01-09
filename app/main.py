@@ -8,7 +8,6 @@ from routers import users
 cred = credentials.Certificate("../serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
 
-# サーバーの起動
 app = FastAPI()
 app.include_router(users.router)
 
