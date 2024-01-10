@@ -1,6 +1,13 @@
+from fastapi import Depends
 import requests
 
+from repository import get_current_user
 from firebase_admin import auth
+
+
+def get_user(cred = Depends(get_current_user)):
+    uid = cred.get("uid")
+    return {"message": f"Hello, {uid}!"}
 
 def create_user():
     auth.create_user(
