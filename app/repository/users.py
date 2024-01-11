@@ -3,7 +3,9 @@ import requests
 from firebase_admin import auth
 
 def create_user():
+    # see: https://firebase.google.com/docs/auth/admin/manage-users?hl=ja#create_a_user
     auth.create_user(
+      display_name='John Doe',
       email='user@example.com',
       password='secretPassword',
   )

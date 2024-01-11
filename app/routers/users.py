@@ -2,9 +2,9 @@ from functools import lru_cache
 from typing import Annotated
 from fastapi import APIRouter, Depends
 from fastapi.security import HTTPAuthorizationCredentials
-from repository import get_current_user
 from repository.users import create_user, firebase_login
 from model.Settings import Settings
+from model.User import User
 
 router = APIRouter()
 
@@ -13,9 +13,8 @@ def get_settings():
     return Settings()
 
 @router.get("/user", tags=["users"])
-def user_get(cred: Annotated[HTTPAuthorizationCredentials, Depends(get_current_user)]):
-    uid = cred.get("uid")
-    return {"message": f"Hello, {uid}!"}
+def user_get(cred: Annotated[HTTPAuthorizationCredentials, Depends(User.get_current_user)]) -> User:
+    return cred
 
 @router.get("/user/create", tags=["users"])
 def user_create():
