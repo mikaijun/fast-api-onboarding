@@ -10,6 +10,7 @@ fastapi = "*"
 pydantic = "*"
 uvicorn = "*"
 pydantic-settings = "*"
+mypy = "*"
 
 [dev-packages]
 
