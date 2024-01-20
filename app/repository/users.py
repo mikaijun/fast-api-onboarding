@@ -1,23 +1,23 @@
-import statistics
 from fastapi import HTTPException
 import requests
 
-from firebase_admin import auth, firestore
+from firebase_admin import firestore
+from model.Settings import Settings
 
 from model.User import User
+
+from google.cloud.firestore import FieldFilter
 
 
 def create_user(user: User):
     db = firestore.client()
-    collections = db.collection("users").stream()
-    # TODO: リファクタ
-    # TODO: リクエストされたuuidとfirebaseのuuidが一致するか確認する
-    for doc in collections:
-        if doc.id == user.uid:
-            raise HTTPException(
-                status_code=422,
-                detail="登録済みです",
-            )
+    users_ref = db.collection("users")
+    query_ref = users_ref.where(filter=FieldFilter("id", "==", user.uid))
+    if 0 < len(query_ref.get()):
+        raise HTTPException(
+            status_code=422,
+            detail="既に登録済みです",
+        )
     doc_ref = db.collection("users").document(user.uid)
     doc_ref.set({"id": user.uid})
     return User(uid=user.uid)
