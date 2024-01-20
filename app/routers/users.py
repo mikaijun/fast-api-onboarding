@@ -8,19 +8,25 @@ from model.User import User
 
 router = APIRouter()
 
+
 @lru_cache()
 def get_settings():
     return Settings()
 
+
 @router.get("/user", tags=["users"])
-def user_get(cred: Annotated[HTTPAuthorizationCredentials, Depends(User.get_current_user)]) -> User:
+def user_get(
+    cred: Annotated[HTTPAuthorizationCredentials, Depends(User.get_current_user)]
+) -> User:
     return cred
+
 
 @router.get("/user/create", tags=["users"])
 def user_create():
     create_user()
     # TODO: returnの変更
-    return {"message": 'Sucessfully created new user'}
+    return {"message": "Sucessfully created new user"}
+
 
 @router.get("/user/login", tags=["users"])
 def login(settings: Annotated[Settings, Depends(get_settings)]):

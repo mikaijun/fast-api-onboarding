@@ -30,10 +30,16 @@ pipenv install -r requirements.txt
 pipenv shell
 ```
 
-サーバー立ち上げる
+仮想環境の中でサーバー立ち上げる
 
 ```bash
 uvicorn main:app --reload
+```
+
+仮想環境の中でコード整形を行う
+
+```bash
+black .
 ```
 
 ### VScode の import エラー直し方
@@ -72,6 +78,12 @@ https://marketplace.visualstudio.com/items?itemName=KevinRose.vsc-python-indent
 
 ### mypy
 
-VScode でインデントや型のチェックを行ってくれる
+インデントや型のチェックを行ってくれる
 
 https://marketplace.visualstudio.com/items?itemName=matangover.mypy
+
+### Black Formatter
+
+コードの整形を自動で行ってくれる
+
+https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter

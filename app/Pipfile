@@ -11,6 +11,7 @@ pydantic = "*"
 uvicorn = "*"
 pydantic-settings = "*"
 mypy = "*"
+black = "*"
 
 [dev-packages]
 

@@ -5,3 +5,4 @@ pydantic
 uvicorn
 pydantic_settings
 mypy
+black
