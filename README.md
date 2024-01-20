@@ -36,7 +36,7 @@ pipenv shell
 uvicorn main:app --reload
 ```
 
-## VScode の import エラー直し方
+### VScode の import エラー直し方
 
 VSCode のコマンドパレット `(Ctrl+Shift+P)`から、Python: Select Interpreterw を選択。
 VSCode が使用可能な Python 環境一覧が表示されるため、そこから使用したい環境を選択。
