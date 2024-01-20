@@ -21,11 +21,9 @@ def user_get(
     return cred
 
 
-@router.get("/user/create", tags=["users"])
-def user_create():
-    create_user()
-    # TODO: returnの変更
-    return {"message": "Sucessfully created new user"}
+@router.post("/user/create", tags=["users"])
+def user_create(uid: str):
+    return create_user(User.create(uid))
 
 
 @router.get("/user/login", tags=["users"])

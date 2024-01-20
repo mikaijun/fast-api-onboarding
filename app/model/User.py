@@ -1,3 +1,4 @@
+from typing import Union
 from pydantic_settings import BaseSettings
 from firebase_admin import auth
 import statistics
@@ -8,8 +9,9 @@ from grpc import Status
 
 class User(BaseSettings):
     uid: str
-    name: str
-    email: str
+
+    def create(uid):
+        return User(uid=uid)
 
     def get_current_user(cred: HTTPAuthorizationCredentials = Depends(HTTPBearer())):
         if not cred:
@@ -26,4 +28,4 @@ class User(BaseSettings):
                 detail="Invalid authentication credentials",
                 headers={"WWW-Authenticate": "Bearer"},
             )
-        return User(name=cred["name"], email=cred["email"], uid=cred["uid"])
+        return User(uid=cred["uid"])
