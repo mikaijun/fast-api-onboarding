@@ -1,9 +1,11 @@
 from typing import List, Union
-from fastapi import APIRouter, Depends, HTTPException, Header
+
+from fastapi import APIRouter, Depends, Header, HTTPException
+
 from model.Authorization import Authorization
+from model.User import User
 from repository.Authorization import get_current_user, verify_id_token
 from repository.user import UserRepository
-from model.User import User
 
 router = APIRouter()
 user_repository = UserRepository()

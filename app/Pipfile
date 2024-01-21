@@ -12,6 +12,7 @@ uvicorn = "*"
 pydantic-settings = "*"
 mypy = "*"
 black = "*"
+isort = "*"
 
 [dev-packages]
 
