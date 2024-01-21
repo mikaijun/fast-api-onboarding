@@ -42,6 +42,12 @@ uvicorn main:app --reload
 black .
 ```
 
+仮想環境の中でimport順を並び替える
+
+```bash
+isort .
+```
+
 ### VScode の import エラー直し方
 
 VSCode のコマンドパレット `(Ctrl+Shift+P)`から、Python: Select Interpreterw を選択。
@@ -75,12 +81,6 @@ https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance
 引数改行時にインデント調整してくれる
 
 https://marketplace.visualstudio.com/items?itemName=KevinRose.vsc-python-indent
-
-### mypy
-
-インデントや型のチェックを行ってくれる
-
-https://marketplace.visualstudio.com/items?itemName=matangover.mypy
 
 ### Black Formatter
 
