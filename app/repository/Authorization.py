@@ -16,19 +16,17 @@ def verify_id_token(authorization: Authorization):
     return Authorization(uid=verify_id_token["uid"], token=authorization.token)
 
 
-def get_current_user(cred: HTTPAuthorizationCredentials = Depends(HTTPBearer())):
-    if not cred:
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid authentication credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+async def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends((HTTPBearer())),
+):
+    authorization = Authorization.create(token=credentials.credentials)
     try:
-        cred = auth.verify_id_token(cred.credentials)
-    except:
+        verified_token = verify_id_token(authorization)
+        return verified_token
+    except HTTPException as e:
+        raise e  # 既に処理済みの HTTPException を再スロー
+    except Exception as e:
         raise HTTPException(
-            status_code=401,
-            detail="Invalid authentication credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    return User(uid=cred["uid"])
+            status_code=500,
+            detail="Internal Server Error",
+        ) from e
