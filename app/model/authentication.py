@@ -3,9 +3,9 @@ from typing import Optional
 from pydantic_settings import BaseSettings
 
 
-class Auth(BaseSettings):
+class Authentication(BaseSettings):
     token: str
     uid: Optional[str] = None
 
-    def create(token):
-        return Auth(token=token)
+    def from_token(token):
+        return Authentication(token=token)
