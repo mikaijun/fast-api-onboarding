@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings
 
 
 class User(BaseSettings):
-    uid: str
+    id: str
 
-    def create(uid):
-        return User(uid=uid)
+    def create(id):
+        return User(id=id)
