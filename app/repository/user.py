@@ -1,7 +1,7 @@
 from firebase_admin import firestore
 from google.cloud.firestore import FieldFilter
 
-from model.User import User
+from model.user import User
 
 
 class UserRepository:
