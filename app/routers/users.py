@@ -6,17 +6,18 @@ from model.authentication import Authentication
 from model.user import User
 from repository.authentication import AuthRepository
 from repository.user import UserRepository
+from services.authUser import AuthUserService
 
 router = APIRouter()
 user_repository = UserRepository()
 authentication_repository = AuthRepository()
+authUserService = AuthUserService()
+auth_user = authUserService.get_auth_user
 
 
 @router.get("/user", tags=["users"])
-async def user_get(
-    current_user: Authentication = Depends(authentication_repository.get_current_user),
-):
-    return current_user
+async def user_get(auth_user: Authentication = Depends(auth_user)):
+    return auth_user
 
 
 @router.post("/user/create", tags=["users"])
@@ -25,14 +26,14 @@ async def user_get(
 def user_create(x_token: Union[List[str], None] = Header(default=None)):
     try:
         authentication = authentication_repository.verify_id_token(
-            Authentication.from_token(token=x_token[0])
+            Authentication(token=x_token[0])
         )
     except Exception:
         raise HTTPException(
             status_code=401,
             detail="ユーザー認証に失敗しました",
         )
-    new_user = User.create(authentication.uid)
+    new_user = User(id=authentication.uid)
     already_user = user_repository.find(new_user)
     if already_user is not None:
         raise HTTPException(
