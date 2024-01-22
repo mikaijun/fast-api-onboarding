@@ -33,7 +33,7 @@ def user_create(x_token: Union[List[str], None] = Header(default=None)):
             detail="ユーザー認証に失敗しました",
         )
     new_user = User.create(authentication.uid)
-    already_user = user_repository.find_user_by_uid(new_user)
+    already_user = user_repository.find(new_user)
     if already_user is not None:
         raise HTTPException(
             status_code=409,

@@ -14,7 +14,7 @@ class UserRepository:
         doc_ref.set({"id": user.id})
         return User(id=user.id)
 
-    def find_user_by_uid(self, user: User):
+    def find(self, user: User):
         query_ref = self.users_ref.where(filter=FieldFilter("id", "==", user.id))
         result = query_ref.get()
         if 0 < len(result):
