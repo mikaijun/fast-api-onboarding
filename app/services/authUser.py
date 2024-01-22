@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import Depends, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
@@ -11,8 +13,9 @@ authentication_repository = AuthRepository()
 
 
 class AuthUserService:
-    async def get_auth_user(
-        self, credentials: HTTPAuthorizationCredentials = Depends((HTTPBearer()))
+    def get_auth_user(
+        self,
+        credentials: Annotated[HTTPAuthorizationCredentials, Depends((HTTPBearer()))],
     ):
         try:
             authentication = authentication_repository.verify_id_token(

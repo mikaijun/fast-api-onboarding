@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import Annotated, List, Union
 
 from fastapi import APIRouter, Depends, Header, HTTPException
 
@@ -16,7 +16,7 @@ auth_user = authUserService.get_auth_user
 
 
 @router.get("/user", tags=["users"])
-async def user_get(auth_user: Authentication = Depends(auth_user)):
+async def user_get(auth_user: Annotated[User, Depends(auth_user)]):
     return auth_user
 
 
