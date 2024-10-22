@@ -1,3 +1,6 @@
+# このリポジトリに関して
+FastAPIの案件に参画する前の事前学習
+
 ## pip の導入方法
 
 おそらく[ドキュメント](https://pip.pypa.io/en/stable/installation/)通りのコマンドでできると思います
